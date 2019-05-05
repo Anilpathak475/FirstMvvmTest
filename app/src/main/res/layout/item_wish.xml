@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content" app:cardElevation="6dp"
+                                   app:cardCornerRadius="6dp" app:contentPadding="8dp">
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                       android:layout_height="wrap_content">
+        <TextView
+                android:text="Wish Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:id="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp" android:id="@+id/wishName"
+                app:layout_constraintStart_toEndOf="@+id/textView" android:layout_marginStart="24dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+        <TextView
+                android:text="User Id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:id="@+id/textView3" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/userId"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/wishName"
+                app:layout_constraintStart_toStartOf="@+id/wishName" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"/>
+        <TextView
+                android:text="Target Balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:id="@+id/textView5" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/targetBalance" app:layout_constraintStart_toStartOf="@+id/userId"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/userId" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"/>
+        <TextView
+                android:text="Target Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:id="@+id/textView7" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/targetDate"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/targetBalance" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp" app:layout_constraintStart_toStartOf="@+id/targetBalance"/>
+        <TextView
+                android:text="Wish Type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:id="@+id/textView9" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/wishType" app:layout_constraintStart_toStartOf="@+id/targetDate"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/targetDate"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
