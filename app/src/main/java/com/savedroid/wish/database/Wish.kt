@@ -1,14 +1,9 @@
-package com.savedroid.wish.database.entities
+package com.savedroid.wish.database
 
 
 import androidx.annotation.Nullable
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
-
-data class Info(
-    @SerializedName("background")
-    val background: String ?
-)
 
 @Entity
 data class Wish(
@@ -75,5 +70,16 @@ data class Wish(
     @SerializedName("id")
     val id: String?
 )
+
+@Dao
+interface Wishes : BaseDao<Wish> {
+
+    @Query("SELECT * FROM wish")
+    fun getAll(): List<Wish>
+
+    @Query("DELETE FROM wish")
+    fun deleteAll()
+
+}
 
 

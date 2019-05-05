@@ -1,7 +1,10 @@
 package com.savedroid.wish.network
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.Headers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,9 +13,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
-import com.google.gson.GsonBuilder
-import com.google.gson.Gson
-import okhttp3.Interceptor
 
 
 object NetworkModule {
@@ -80,5 +80,6 @@ object NetworkModule {
 
     private fun makeHttpHeaders(): Headers.Builder {
         return Headers.Builder()
+
     }
 }

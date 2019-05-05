@@ -11,10 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.savedroid.wish.database.entities.Wish
+import com.savedroid.wish.database.Wish
 import com.savedroid.wish.network.errorhandler.WishErrorHandler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_wish.view.*
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,19 +27,34 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         wishRecyclerView.let {
             it.layoutManager = LinearLayoutManager(this)
             it.adapter = wishAdapter
         }
 
+        applyStateListeners()
+        if (!networkStatus) {
+            Toast.makeText(
+                this@MainActivity,
+                "No Internet Available! Showing records saved in device if any.",
+                Toast.LENGTH_LONG
+            ).show()
+
+        }
+        viewModel.loadWishes()
+    }
+
+    private fun applyStateListeners() {
         viewModel.exception.observe(this, Observer { errorHandler(it) })
         viewModel.wishes.observe(this, Observer { setData(it) })
-        viewModel.loadWishes()
     }
 
     private fun setData(words: List<Wish>) {
         wishAdapter.wishes = words
         wishAdapter.notifyDataSetChanged()
+        progressBar.gone()
+        wishRecyclerView.visible()
     }
 
     private fun errorHandler(exception: Exception) {
@@ -51,12 +67,16 @@ class MainActivity : AppCompatActivity() {
             }
             else -> Toast.makeText(this@MainActivity, "Oops! Something went wrong.", Toast.LENGTH_LONG).show()
         }
+        progressBar.gone()
+
     }
 
     class WishAdapter :
-        RecyclerView.Adapter<WishAdapter.WishViewHolder>() {
-        var wishes: List<Wish> = mutableListOf()
+        RecyclerView.Adapter<WishAdapter.WishViewHolder>(), AutoUpdatableAdapter {
 
+        var wishes: List<Wish> by Delegates.observable(emptyList()) { prop, old, new ->
+            autoNotify(old, new) { o, n -> o.id == n.id }
+        }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): WishViewHolder {
             val layoutInflater =
@@ -75,9 +95,9 @@ class MainActivity : AppCompatActivity() {
 
         inner class WishViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             fun bind(wish: Wish) {
-                itemView.wishName.text = wish.name
+                itemView.wishName.text = wish.name + wishes.indexOf(wish)
                 itemView.userId.text = wish.userId
-                itemView.targetBalance.text = wish.name
+                itemView.targetBalance.text = wish.targetBalance.toString()
                 itemView.targetDate.text = wish.targetDate
                 itemView.wishType.text = wish.isGroupWish.toString()
             }

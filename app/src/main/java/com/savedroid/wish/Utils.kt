@@ -6,9 +6,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.savedroid.wish.database.entities.Wish
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 
 
 val Context.networkStatus
@@ -28,8 +27,6 @@ fun View.visible() {
     visibility = View.VISIBLE
 }
 
-fun <T : Any?> MutableLiveData<T>.default(initialValue: T) = apply { setValue(initialValue) }
-
 private fun noInternetDialog(activity: Activity) {
     try {
         val builder = AlertDialog.Builder(activity)
@@ -40,12 +37,28 @@ private fun noInternetDialog(activity: Activity) {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-
-
 }
 
-interface DataCallBack {
-    fun onSuccess(wishes: List<Wish>)
+interface AutoUpdatableAdapter {
+
+    fun <T> RecyclerView.Adapter<*>.autoNotify(old: List<T>, new: List<T>, compare: (T, T) -> Boolean) {
+        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return compare(old[oldItemPosition], new[newItemPosition])
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return old[oldItemPosition] == new[newItemPosition]
+            }
+
+            override fun getOldListSize() = old.size
+
+            override fun getNewListSize() = new.size
+        })
+
+        diff.dispatchUpdatesTo(this)
+    }
 }
 
 
